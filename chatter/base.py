@@ -9,9 +9,9 @@ import re
 
 import sys
 
-from urllib import quote
-
 import urllib3
+import certifi
+
 
 class ChatterAuth(object):
     def __init__(self, client_id, client_secret):
@@ -23,11 +23,11 @@ class ChatterCall(object):
     def __init__(self, auth, instance_url, access_token, callable_cls, 
                  uriparts, refresh_token=None, access_token_refreshed_callback=None):
         self.auth = auth
-        self.instance_url = unicode(instance_url)
-        self.access_token = unicode(access_token)
+        self.instance_url = instance_url
+        self.access_token = access_token
         self.callable_cls = callable_cls
         self.uriparts = uriparts
-        self.refresh_token = unicode(refresh_token)
+        self.refresh_token = refresh_token
         self.access_token_refreshed_callback = access_token_refreshed_callback
 
     def __getitem__(self, k):
@@ -127,7 +127,7 @@ class ChatterCall(object):
 
     def _handle_response(self, method, resource, fields, headers=None, refresh_access_token=True, 
                          max_retries=2):
-        http = urllib3.PoolManager()
+        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where())
         
         headers = headers or dict()
 

@@ -22,7 +22,8 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     install_requires=[
-        'urllib3>=1.3'
+        'urllib3>=1.3',
+        'certifi>=2017.4.17'
     ],
     include_package_data=True,
     zip_safe=True,
